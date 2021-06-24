@@ -62,25 +62,25 @@ export const obtenerResultadosApi =  () => async dispatch => {
     try {
         const respuestaUsuarios = await fetch('http://localhost:3000/api/usuarios');
         const resultadoUsuarios = await respuestaUsuarios.json();
-        console.log(resultadoUsuarios)
+        console.log("USUARIOS", resultadoUsuarios)
             
         dispatch(obtenerResultadosUsuarios(resultadoUsuarios))
 
         const respuestaConciliaciones = await fetch('http://localhost:3000/api/conciliaciones');
         const resultadoConciliaciones = await respuestaConciliaciones.json();
-        console.log(resultadoConciliaciones)
+        console.log("CONCILIACIONES", resultadoConciliaciones)
             
         dispatch(obtenerResultadosConciliaciones(resultadoConciliaciones))
 
         const respuestaFuentes = await fetch('http://localhost:3000/api/fuentes');
         const resultadoFuentes = await respuestaFuentes.json();
-        console.log(resultadoFuentes)
+        console.log("FUENTES", resultadoFuentes)
             
         dispatch(obtenerResultadosFuentes(resultadoFuentes))
 
         const respuestaTableros = await fetch('http://localhost:3000/api/tableros');
         const resultadoTableros = await respuestaTableros.json();
-        console.log(resultadoTableros)
+        console.log("TABLEROS",resultadoTableros)
             
         dispatch(obtenerResultadosTableros(resultadoTableros))
         
