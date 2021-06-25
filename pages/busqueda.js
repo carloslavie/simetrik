@@ -5,21 +5,55 @@ import ListadoBusquedaUsuarios from '../src/components/tablasBusqueda/listadoBus
 import ListadoConciliaciones from '../src/components/tablasBusqueda/listadoConciliaciones';
 import ListadoFuentes from '../src/components/tablasBusqueda/listadoFuentes';
 import ListadoTableros from '../src/components/tablasBusqueda/listadoTableros';
-import { Stack, Radio, RadioGroup, Text, Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react"
+import { Flex, Button, Stack, Radio, RadioGroup, Text, Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react"
 
 
 const Busqueda = () => {
     
     const router = useRouter();
-  console.log(router);
-  const { query: { q } } = router;
-  console.log(q);
+    console.log(router);
+    const { query: { q } } = router;
+    console.log(q);
 
-    // const resultadoUsers = useSelector(state => state.busqueda.resultadoUsuarios)
-    // console.log(resultado);
-    const {resultadoUsuarios, resultadoConciliaciones, resultadoFuentes, resultadoTableros} = useSelector(state => state.busqueda)
     
-    // console.log(resultadoTableros[0].visuals[0])
+    const {resultadoUsuarios, resultadoConciliaciones, resultadoFuentes, resultadoTableros} = useSelector(state => state.busqueda)
+     
+    //State para cerrar Tabla usuarios
+    const [ open, setOpen ] = useState(true);
+    const handleOpen = ()=>{
+        if(open === true){
+            setOpen(false)
+        }else if(open === false){
+            setOpen(true)
+        }
+    }
+    //State para cerrar Tabla conciliaciones
+    const [ openConc, setOpenConc ] = useState(true);
+    const handleOpenConc = ()=>{
+        if(openConc === true){
+            setOpenConc(false)
+        }else if(openConc === false){
+            setOpenConc(true)
+        }
+    }
+    // //State para cerrar Tabla fuentes
+    // const [ open, setOpen ] = useState(true);
+    // const handleOpen = ()=>{
+    //     if(open === true){
+    //         setOpen(false)
+    //     }else if(open === false){
+    //         setOpen(true)
+    //     }
+    // }
+    // //State para cerrar Tabla tableros
+    // const [ open, setOpen ] = useState(true);
+    // const handleOpen = ()=>{
+    //     if(open === true){
+    //         setOpen(false)
+    //     }else if(open === false){
+    //         setOpen(true)
+    //     }
+    // }
 
     //States para usuarios
     const [value, setValue] = useState("");
@@ -127,6 +161,7 @@ const Busqueda = () => {
 
     }, [valueConc])
 
+    //RESULTADOS BUSQUEDA TABLA USUARIOS
     const newResultadoUsuarios = resultadoUsuarios.filter(result => {
         return(
             result._id.toLowerCase().includes(q.toLowerCase()) ||
@@ -148,6 +183,7 @@ const Busqueda = () => {
             result.tags[6].toLowerCase().includes(q.toLowerCase())   
         )
     } )
+    //RESULTADOS BUSQUEDA TABLA CONCILIACIONES
     const newResultadoConciliaciones = resultadoConciliaciones.filter(result => {
         return(
             result.balance.toLowerCase().includes(q.toLowerCase()) ||
@@ -166,6 +202,7 @@ const Busqueda = () => {
             result.tags[6].toLowerCase().includes(q.toLowerCase())            
         )
     } )
+    //RESULTADOS BUSQUEDA TABLA FUENTES
     const newResultadoFuentes = resultadoFuentes.filter(result => {
         return(
             result.company.toLowerCase().includes(q.toLowerCase()) ||
@@ -183,6 +220,7 @@ const Busqueda = () => {
             result.tags[6].toLowerCase().includes(q.toLowerCase())   
         )
     } )
+    //RESULTADOS BUSQUEDA TABLA TABLEROS
     const newResultadoTableros = resultadoTableros.filter((result, index) => {
         return(
             result.dashboardName.toLowerCase().includes(q.toLowerCase()) ||
@@ -210,24 +248,33 @@ const Busqueda = () => {
 
         )
     } )
-    //  console.log(newResultado)    
-
+    
 
     return ( 
         <>
-<RadioGroup onChange={setValue} value={value}>
-      <Stack direction="row">
-        <Radio value="1">name</Radio>
-        <Radio value="2">adress</Radio>
-        <Radio value="3">company</Radio>
-        <Radio value="4">email</Radio>
-        <Radio value="5">age</Radio>
-      </Stack>
-    </RadioGroup>
+        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="4">USUARIOS</Text>
+        <Flex direction="row" alignItems="center" justify="space-between" m="4">
 
-        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="2">USUARIOS</Text>
+            <RadioGroup onChange={setValue} value={value}>
+            <Stack direction="row">
+                <Radio value="1">name</Radio>
+                <Radio value="2">adress</Radio>
+                <Radio value="3">company</Radio>
+                <Radio value="4">email</Radio>
+                <Radio value="5">age</Radio>
+            </Stack>
+            </RadioGroup>
 
-        <Table variant="striped" colorScheme="facebook">
+            <Button colorScheme="facebook" size="sm"
+            onClick={handleOpen}
+            >
+                Ocultar Tabla
+            </Button>
+        </Flex>
+
+        {open ? 
+        (
+            <Table variant="striped" colorScheme="facebook">
             
             <Thead >
                 <Tr >
@@ -261,29 +308,41 @@ const Busqueda = () => {
             ))
         ))
         }
-                {/* { newResultadoUsuarios.length === 0 ? 'No existen resultados que mostrar' : (
-            newResultadoUsuarios.map(result => (
-                <ListadoBusquedaUsuarios
-                    key={result._id}
-                    result={result}                    
-                />
-            ))
-        )} */}
+                
             </Tbody>            
         </Table>
-
-        <RadioGroup onChange={setValueConc} value={valueConc}>
-            <Stack direction="row">
-                <Radio value="balance">balance</Radio>
-                <Radio value="name">conciliation name</Radio>
-                <Radio value="sourceA">source A</Radio>
-                <Radio value="sourceB">source B</Radio>
-            </Stack>
-        </RadioGroup>
+        ): null}
 
         <Text fontSize="2xl" fontWeight="semibold" my="2" ml="2">CONCILIACIONES</Text>
 
-        <Table variant="striped" colorScheme="facebook">
+        <Flex direction="row" alignItems="center" justify="space-between" m="4">
+
+            <RadioGroup onChange={setValueConc} value={valueConc}>
+                <Stack direction="row">
+                    <Radio value="balance">balance</Radio>
+                    <Radio value="name">conciliation name</Radio>
+                    <Radio value="sourceA">source A</Radio>
+                    <Radio value="sourceB">source B</Radio>
+                </Stack>
+            </RadioGroup>
+
+            {openConc ? 
+            <Button colorScheme="facebook" size="sm"
+            onClick={handleOpenConc}
+            >
+                Ocultar Tabla
+            </Button> :
+            <Button colorScheme="facebook" size="sm"
+            onClick={handleOpenConc}
+            >
+                Mostrar Tabla
+            </Button>
+            }
+
+        </Flex>
+
+        {openConc ? (
+            <Table variant="striped" colorScheme="facebook">
             
             <Thead >
                 <Tr >
@@ -314,18 +373,9 @@ const Busqueda = () => {
                 ))
             ))
             }
-
-
-                {/* { newResultadoConciliaciones.length === 0 ? null : (
-            newResultadoConciliaciones.map(resultC => (
-                <ListadoConciliaciones
-                    key={resultC._id}
-                    resultC={resultC}                    
-                />
-            ))
-        )} */}
             </Tbody>            
         </Table>
+        ) : null }
 
         <Text fontSize="2xl" fontWeight="semibold" my="2" ml="2">FUENTES</Text>
 
