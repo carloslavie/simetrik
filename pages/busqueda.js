@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import ListadoBusquedaUsuarios from '../src/components/tablasBusqueda/listadoBusquedaUsuarios';
 import ListadoConciliaciones from '../src/components/tablasBusqueda/listadoConciliaciones';
 import ListadoFuentes from '../src/components/tablasBusqueda/listadoFuentes';
 import ListadoTableros from '../src/components/tablasBusqueda/listadoTableros';
-import { Text, Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react"
+import { Stack, Radio, RadioGroup, Text, Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react"
+
 
 const Busqueda = () => {
     
@@ -19,6 +20,22 @@ const Busqueda = () => {
     const {resultadoUsuarios, resultadoConciliaciones, resultadoFuentes, resultadoTableros} = useSelector(state => state.busqueda)
     
     // console.log(resultadoTableros[0].visuals[0])
+
+    const [value, setValue] = useState("");
+    const [ filtro, setFiltro ] = useState([]);
+    const [ cargar, setCargar ] = useState(false);
+
+    // if(value === "1"){
+    //      const infoUsuarios = resultadoUsuarios.filter(res => {
+    //          return(
+    //              res.name.firstName.toLowerCase().includes(q.toLowerCase()) ||
+    //              res.name.lastName.toLowerCase().includes(q.toLowerCase()) 
+    //          )
+    //      })
+    //      setFiltro(infoUsuarios);
+    //      setCargar(true);
+        
+    // }
 
     const newResultadoUsuarios = resultadoUsuarios.filter(result => {
         return(
@@ -108,6 +125,14 @@ const Busqueda = () => {
 
     return ( 
         <>
+<RadioGroup onChange={setValue} value={value}>
+      <Stack direction="row">
+        <Radio value="1">name</Radio>
+        <Radio value="2">adress</Radio>
+        <Radio value="3">company</Radio>
+      </Stack>
+    </RadioGroup>
+
         <Text fontSize="2xl" fontWeight="semibold" my="2" ml="2">USUARIOS</Text>
 
         <Table variant="striped" colorScheme="facebook">
@@ -127,14 +152,31 @@ const Busqueda = () => {
                 </Tr>
             </Thead>
             <Tbody>
-                { newResultadoUsuarios.length === 0 ? 'No existen resultados que mostrar' : (
+                {  cargar ? 
+               ( filtro.map(result => (
+                        <ListadoBusquedaUsuarios
+                            key={result._id}
+                            result={result}                    
+                        />
+                    )) ) :
+
+               ( newResultadoUsuarios.length === 0 ? 'No existen resultados que mostrar' : (
             newResultadoUsuarios.map(result => (
                 <ListadoBusquedaUsuarios
                     key={result._id}
                     result={result}                    
                 />
             ))
-        )}
+        ))
+        }
+                {/* { newResultadoUsuarios.length === 0 ? 'No existen resultados que mostrar' : (
+            newResultadoUsuarios.map(result => (
+                <ListadoBusquedaUsuarios
+                    key={result._id}
+                    result={result}                    
+                />
+            ))
+        )} */}
             </Tbody>            
         </Table>
 
