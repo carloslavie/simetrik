@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import ListadoBusquedaUsuarios from '../src/components/tablasBusqueda/listadoBusquedaUsuarios';
@@ -21,21 +21,111 @@ const Busqueda = () => {
     
     // console.log(resultadoTableros[0].visuals[0])
 
+    //States para usuarios
     const [value, setValue] = useState("");
     const [ filtro, setFiltro ] = useState([]);
     const [ cargar, setCargar ] = useState(false);
+    
+    //States para conciliaciones
+    const [valueConc, setValueConc ] = useState("");
+    const [ cargarConc, setCargarConc ] = useState(false);
+    const [ filtroConc, setFiltroConc ] = useState([]);
 
-    // if(value === "1"){
-    //      const infoUsuarios = resultadoUsuarios.filter(res => {
-    //          return(
-    //              res.name.firstName.toLowerCase().includes(q.toLowerCase()) ||
-    //              res.name.lastName.toLowerCase().includes(q.toLowerCase()) 
-    //          )
-    //      })
-    //      setFiltro(infoUsuarios);
-    //      setCargar(true);
+    //Filtro para usuarios
+    useEffect(() => {
         
-    // }
+        if(value === "1"){
+            setCargar(true);
+              const infoUsuarios = resultadoUsuarios.filter(res => {
+                  return(
+                      res.name.firstName.toLowerCase().includes(q.toLowerCase()) ||
+                      res.name.lastName.toLowerCase().includes(q.toLowerCase()) 
+                  )
+              })
+              setFiltro(infoUsuarios);
+            console.log('aprestaste name')
+        }else if(value === "2"){
+            setCargar(true);
+              const infoUsuarios = resultadoUsuarios.filter(res => {
+                  return(
+                      res.address.toLowerCase().includes(q.toLowerCase())  
+                  )
+              })
+              setFiltro(infoUsuarios);
+            console.log('aprestaste adress')
+        }else if(value === "3"){
+            setCargar(true);
+              const infoUsuarios = resultadoUsuarios.filter(res => {
+                  return(
+                      res.company.toLowerCase().includes(q.toLowerCase())  
+                  )
+              })
+              setFiltro(infoUsuarios);
+            console.log('aprestaste company')
+        }else if(value === "4"){
+            setCargar(true);
+              const infoUsuarios = resultadoUsuarios.filter(res => {
+                  return(
+                      res.email.toLowerCase().includes(q.toLowerCase())  
+                  )
+              })
+              setFiltro(infoUsuarios);
+            console.log('aprestaste email')
+        }else if(value === "5"){
+            setCargar(true);
+              const infoUsuarios = resultadoUsuarios.filter(res => {
+                  return(
+                      res.age == q
+                  )
+              })
+              setFiltro(infoUsuarios);
+            console.log('aprestaste age')
+        }
+
+    }, [value])
+
+    //Filtro para Conciliaciones
+    useEffect(() => {
+        
+        if(valueConc === "balance"){
+            setCargarConc(true);
+              const infoConciliaciones = resultadoConciliaciones.filter(res => {
+                  return(
+                    res.balance.toLowerCase().includes(q.toLowerCase())
+                  )
+              })
+              setFiltroConc(infoConciliaciones);
+            console.log('aprestaste balance')
+        }else if(valueConc === "name"){
+            setCargar(true);
+              const infoConciliaciones = resultadoConciliaciones.filter(res => {
+                  return(
+                    res.conciliationName.toLowerCase().includes(q.toLowerCase())  
+                  )
+              })
+              setFiltroConc(infoConciliaciones);
+            console.log('aprestaste concName')
+        }else if(valueConc === "sourceA"){
+            setCargar(true);
+              const infoConciliaciones = resultadoConciliaciones.filter(res => {
+                  return(
+                    res.sourceA.toLowerCase().includes(q.toLowerCase())  
+                  )
+              })
+              setFiltroConc(infoConciliaciones);
+            console.log('aprestaste source A')
+        }else if(valueConc === "sourceB"){
+            setCargar(true);
+              const infoConciliaciones = resultadoConciliaciones.filter(res => {
+                  return(
+                    res.sourceB.toLowerCase().includes(q.toLowerCase())  
+                  )
+              })
+              setFiltroConc(infoConciliaciones);
+            console.log('aprestaste source B')
+        }
+
+    }, [valueConc])
 
     const newResultadoUsuarios = resultadoUsuarios.filter(result => {
         return(
@@ -130,6 +220,8 @@ const Busqueda = () => {
         <Radio value="1">name</Radio>
         <Radio value="2">adress</Radio>
         <Radio value="3">company</Radio>
+        <Radio value="4">email</Radio>
+        <Radio value="5">age</Radio>
       </Stack>
     </RadioGroup>
 
@@ -180,6 +272,15 @@ const Busqueda = () => {
             </Tbody>            
         </Table>
 
+        <RadioGroup onChange={setValueConc} value={valueConc}>
+            <Stack direction="row">
+                <Radio value="balance">balance</Radio>
+                <Radio value="name">conciliation name</Radio>
+                <Radio value="sourceA">source A</Radio>
+                <Radio value="sourceB">source B</Radio>
+            </Stack>
+        </RadioGroup>
+
         <Text fontSize="2xl" fontWeight="semibold" my="2" ml="2">CONCILIACIONES</Text>
 
         <Table variant="striped" colorScheme="facebook">
@@ -196,14 +297,33 @@ const Busqueda = () => {
                 </Tr>
             </Thead>
             <Tbody>
-                { newResultadoConciliaciones.length === 0 ? null : (
+                {  cargarConc ? 
+                ( filtroConc.map(resultC => (
+                        <ListadoConciliaciones
+                            key={resultC._id}
+                            resultC={resultC}                    
+                        />
+                        )) ) :
+
+                ( newResultadoConciliaciones.length === 0 ? null : (
+                    newResultadoConciliaciones.map(resultC => (
+                        <ListadoConciliaciones
+                            key={resultC._id}
+                            resultC={resultC}                    
+                        />
+                ))
+            ))
+            }
+
+
+                {/* { newResultadoConciliaciones.length === 0 ? null : (
             newResultadoConciliaciones.map(resultC => (
                 <ListadoConciliaciones
                     key={resultC._id}
                     resultC={resultC}                    
                 />
             ))
-        )}
+        )} */}
             </Tbody>            
         </Table>
 
