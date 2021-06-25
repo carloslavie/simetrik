@@ -3,12 +3,13 @@ import { useDispatch } from 'react-redux';
 import { obtenerResultadosApi } from '../reducers/buscadorReducer';
 import Router from 'next/router';
 import { Container, Input, Button } from '@chakra-ui/react';
+import BusquedaNew from './busquedaNew';
 
 
 const Buscador = () => {
 
     
-    const [ busqueda, guardarBusqueda ] = useState('');
+    const [ q, guardarBusqueda ] = useState('');
     const dispatch = useDispatch()
 
     const buscarProducto = e =>{
@@ -17,15 +18,16 @@ const Buscador = () => {
         // if(busqueda.trim() === '') return;
         console.log("buscando")
         dispatch(obtenerResultadosApi());
-        Router.push({
-            pathname: '/busqueda',
-            query: { q : busqueda }
-        })
+        // Router.push({
+        //     pathname: '/busqueda',
+        //     query: { q : busqueda }
+        // })
 
     }
     
     return ( 
-        <Container maxW="container.md">
+        <>
+        <Container maxW="container.md" mb="20">
         <form
             
             onSubmit={buscarProducto}
@@ -41,6 +43,11 @@ const Buscador = () => {
             >Buscar</Button>
         </form>
         </Container>
+        
+        <BusquedaNew
+            q={q}
+        />
+        </>
      );
 }
  
