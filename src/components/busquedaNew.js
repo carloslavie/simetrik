@@ -5,7 +5,7 @@ import ListadoBusquedaUsuarios from './tablasBusqueda/listadoBusquedaUsuarios';
 import ListadoConciliaciones from './tablasBusqueda/listadoConciliaciones';
 import ListadoFuentes from './tablasBusqueda/listadoFuentes';
 import ListadoTableros from './tablasBusqueda/listadoTableros';
-import { Box, Flex, Button, Stack, Radio, RadioGroup, Text, Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react"
+import { Link, Box, Flex, Button, Stack, Radio, RadioGroup, Text, Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react"
 
 
 const BusquedaNew = ({q}) => {
@@ -251,221 +251,222 @@ const BusquedaNew = ({q}) => {
 
     return ( 
         <>
+        
         <Box mx="6">
-        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="4">USUARIOS</Text>
-        <Flex direction="row" alignItems="center" justify="space-between" m="4">
+            <Text id="usuarios" fontSize="2xl" fontWeight="semibold" my="2" ml="4">USUARIOS</Text>
+            <Flex direction="row" alignItems="center" justify="space-between" m="4">
 
-            <RadioGroup onChange={setValue} value={value}>
-            <Stack direction="row">
-                <Radio value="1">name</Radio>
-                <Radio value="2">adress</Radio>
-                <Radio value="3">company</Radio>
-                <Radio value="4">email</Radio>
-                <Radio value="5">age</Radio>
-            </Stack>
-            </RadioGroup>
-
-            {open? 
-            <Button colorScheme="facebook" size="sm"
-            onClick={handleOpen}
-            >
-                Ocultar Tabla
-            </Button> :
-            <Button colorScheme="facebook" size="sm"
-            onClick={handleOpen}
-            >
-                Mostrar Tabla
-            </Button>}
-        </Flex>
-
-        {open ? 
-        (
-            <Table variant="striped" colorScheme="facebook" mb="20">
-            
-            <Thead >
-                <Tr >
-                <Th textAlign="center">First Name</Th>
-                <Th textAlign="center">Last Name</Th>
-                <Th textAlign="center">Age</Th>
-                <Th textAlign="center">Gender</Th>
-                <Th textAlign="center">Address</Th>
-                <Th textAlign="center">Email</Th>
-                <Th textAlign="center">Phone Number</Th>
-                <Th textAlign="center">Company</Th>
-                <Th textAlign="center">Created at</Th>
-                </Tr>
-            </Thead>
-            <Tbody>
-                {  cargar ? 
-               ( filtro.map(result => (
-                        <ListadoBusquedaUsuarios
-                            key={result._id}
-                            result={result}                    
-                        />
-                    )) ) :
-
-               ( newResultadoUsuarios.length === 0 ? 'No existen resultados que mostrar' : (
-            newResultadoUsuarios.map(result => (
-                <ListadoBusquedaUsuarios
-                    key={result._id}
-                    result={result}                    
-                />
-            ))
-        ))
-        }
-                
-            </Tbody>            
-        </Table>
-        ): null}
-
-        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="4">CONCILIACIONES</Text>
-
-        <Flex direction="row" alignItems="center" justify="space-between" m="4">
-
-            <RadioGroup onChange={setValueConc} value={valueConc}>
+                <RadioGroup onChange={setValue} value={value}>
                 <Stack direction="row">
-                    <Radio value="balance">balance</Radio>
-                    <Radio value="name">conciliation name</Radio>
-                    <Radio value="sourceA">source A</Radio>
-                    <Radio value="sourceB">source B</Radio>
+                    <Radio value="1">name</Radio>
+                    <Radio value="2">adress</Radio>
+                    <Radio value="3">company</Radio>
+                    <Radio value="4">email</Radio>
+                    <Radio value="5">age</Radio>
                 </Stack>
-            </RadioGroup>
+                </RadioGroup>
 
-            {openConc ? 
-            <Button colorScheme="facebook" size="sm"
-            onClick={handleOpenConc}
-            >
-                Ocultar Tabla
-            </Button> :
-            <Button colorScheme="facebook" size="sm"
-            onClick={handleOpenConc}
-            >
-                Mostrar Tabla
-            </Button>
-            }
+                {open? 
+                <Button colorScheme="facebook" size="sm"
+                onClick={handleOpen}
+                >
+                    Ocultar Tabla
+                </Button> :
+                <Button colorScheme="facebook" size="sm"
+                onClick={handleOpen}
+                >
+                    Mostrar Tabla
+                </Button>}
+            </Flex>
 
-        </Flex>
-
-        {openConc ? (
-            <Table variant="striped" colorScheme="facebook" mb="20">
-            
-            <Thead >
-                <Tr >
-                <Th textAlign="center">Balance</Th>
-                <Th textAlign="center">Conciliation Name</Th>
-                <Th textAlign="center">Description</Th>
-                <Th textAlign="center">Source A</Th>
-                <Th textAlign="center">Source B</Th>
-                <Th textAlign="center">Created at</Th>
-                <Th textAlign="center">Update at</Th>
-                </Tr>
-            </Thead>
-            <Tbody>
-                {  cargarConc ? 
-                ( filtroConc.map(resultC => (
-                        <ListadoConciliaciones
-                            key={resultC._id}
-                            resultC={resultC}                    
-                        />
+            {open ? 
+            (
+                <Table variant="striped" colorScheme="facebook" mb="20">
+                
+                <Thead >
+                    <Tr >
+                    <Th textAlign="center">First Name</Th>
+                    <Th textAlign="center">Last Name</Th>
+                    <Th textAlign="center">Age</Th>
+                    <Th textAlign="center">Gender</Th>
+                    <Th textAlign="center">Address</Th>
+                    <Th textAlign="center">Email</Th>
+                    <Th textAlign="center">Phone Number</Th>
+                    <Th textAlign="center">Company</Th>
+                    <Th textAlign="center">Created at</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {  cargar ? 
+                ( filtro.map(result => (
+                            <ListadoBusquedaUsuarios
+                                key={result._id}
+                                result={result}                    
+                            />
                         )) ) :
 
-                ( newResultadoConciliaciones.length === 0 ? null : (
-                    newResultadoConciliaciones.map(resultC => (
-                        <ListadoConciliaciones
-                            key={resultC._id}
-                            resultC={resultC}                    
-                        />
+                ( newResultadoUsuarios.length === 0 ? 'No existen resultados que mostrar' : (
+                newResultadoUsuarios.map(result => (
+                    <ListadoBusquedaUsuarios
+                        key={result._id}
+                        result={result}                    
+                    />
                 ))
             ))
             }
-            </Tbody>            
-        </Table>
-        ) : null }
+                    
+                </Tbody>            
+            </Table>
+            ): null}
 
-        <Flex direction="row" alignItems="center" justify="space-between" m="4">
-            <Text fontSize="2xl" fontWeight="semibold" my="2" ml="4">FUENTES</Text>
+            <Text id="conciliaciones" fontSize="2xl" fontWeight="semibold" my="2" ml="4">CONCILIACIONES</Text>
 
-            {openFuentes ? 
-            <Button colorScheme="facebook" size="sm"
-            onClick={handleOpenFuentes}
-            >
-                Ocultar Tabla
-            </Button> :
-            <Button colorScheme="facebook" size="sm"
-            onClick={handleOpenFuentes}
-            >
-                Mostrar Tabla
-            </Button>
+            <Flex direction="row" alignItems="center" justify="space-between" m="4">
+
+                <RadioGroup onChange={setValueConc} value={valueConc}>
+                    <Stack direction="row">
+                        <Radio value="balance">balance</Radio>
+                        <Radio value="name">conciliation name</Radio>
+                        <Radio value="sourceA">source A</Radio>
+                        <Radio value="sourceB">source B</Radio>
+                    </Stack>
+                </RadioGroup>
+
+                {openConc ? 
+                <Button colorScheme="facebook" size="sm"
+                onClick={handleOpenConc}
+                >
+                    Ocultar Tabla
+                </Button> :
+                <Button colorScheme="facebook" size="sm"
+                onClick={handleOpenConc}
+                >
+                    Mostrar Tabla
+                </Button>
+                }
+
+            </Flex>
+
+            {openConc ? (
+                <Table variant="striped" colorScheme="facebook" mb="20">
+                
+                <Thead >
+                    <Tr >
+                    <Th textAlign="center">Balance</Th>
+                    <Th textAlign="center">Conciliation Name</Th>
+                    <Th textAlign="center">Description</Th>
+                    <Th textAlign="center">Source A</Th>
+                    <Th textAlign="center">Source B</Th>
+                    <Th textAlign="center">Created at</Th>
+                    <Th textAlign="center">Update at</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    {  cargarConc ? 
+                    ( filtroConc.map(resultC => (
+                            <ListadoConciliaciones
+                                key={resultC._id}
+                                resultC={resultC}                    
+                            />
+                            )) ) :
+
+                    ( newResultadoConciliaciones.length === 0 ? null : (
+                        newResultadoConciliaciones.map(resultC => (
+                            <ListadoConciliaciones
+                                key={resultC._id}
+                                resultC={resultC}                    
+                            />
+                    ))
+                ))
+                }
+                </Tbody>            
+            </Table>
+            ) : null }
+
+            <Flex direction="row" alignItems="center" justify="space-between" m="4">
+                <Text id="fuentes" fontSize="2xl" fontWeight="semibold" my="2" ml="4">FUENTES</Text>
+
+                {openFuentes ? 
+                <Button colorScheme="facebook" size="sm"
+                onClick={handleOpenFuentes}
+                >
+                    Ocultar Tabla
+                </Button> :
+                <Button colorScheme="facebook" size="sm"
+                onClick={handleOpenFuentes}
+                >
+                    Mostrar Tabla
+                </Button>
+                }
+
+            </Flex>
+
+            {openFuentes ? (
+                <Table variant="striped" colorScheme="facebook" mb="20">
+                
+                <Thead >
+                    <Tr >
+                    <Th textAlign="center">Name</Th>
+                    <Th textAlign="center">Company</Th>
+                    <Th textAlign="center">Description</Th>
+                    <Th textAlign="center">Created at</Th>
+                    <Th textAlign="center">Update at</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    { newResultadoFuentes.length === 0 ? null : (
+                newResultadoFuentes.map(resultF => (
+                    <ListadoFuentes
+                        key={resultF._id}
+                        resultF={resultF}                    
+                    />
+                ))
+            )}
+                </Tbody>            
+            </Table>
+            ) : null}
+
+            <Flex direction="row" alignItems="center" justify="space-between" m="4">
+            <Text id="tableros" fontSize="2xl" fontWeight="semibold" my="2" ml="4">TABLEROS</Text>
+
+            {openTableros ? 
+                <Button colorScheme="facebook" size="sm"
+                onClick={handleOpenTableros}
+                >
+                    Ocultar Tabla
+                </Button> :
+                <Button colorScheme="facebook" size="sm"
+                onClick={handleOpenTableros}
+                >
+                    Mostrar Tabla
+                </Button>
             }
+            </Flex>
 
-        </Flex>
-
-        {openFuentes ? (
+            {openTableros ? (
             <Table variant="striped" colorScheme="facebook" mb="20">
+                
+                <Thead >
+                    <Tr >
+                    <Th textAlign="center">DashboardName</Th>
+                    <Th textAlign="center">Description</Th>
+                    <Th textAlign="center">Created at</Th>
+                    <Th textAlign="center">Update at</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
+                    { newResultadoTableros.length === 0 ? null : (
+                newResultadoTableros.map(resultT => (
+                    <ListadoTableros
+                        key={resultT._id}
+                        resultT={resultT}                    
+                    />
+                ))
+            )}
+                </Tbody>            
+            </Table>
+            ): null}
             
-            <Thead >
-                <Tr >
-                <Th textAlign="center">Name</Th>
-                <Th textAlign="center">Company</Th>
-                <Th textAlign="center">Description</Th>
-                <Th textAlign="center">Created at</Th>
-                <Th textAlign="center">Update at</Th>
-                </Tr>
-            </Thead>
-            <Tbody>
-                { newResultadoFuentes.length === 0 ? null : (
-            newResultadoFuentes.map(resultF => (
-                <ListadoFuentes
-                    key={resultF._id}
-                    resultF={resultF}                    
-                />
-            ))
-        )}
-            </Tbody>            
-        </Table>
-        ) : null}
-
-        <Flex direction="row" alignItems="center" justify="space-between" m="4">
-        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="4">TABLEROS</Text>
-
-        {openTableros ? 
-            <Button colorScheme="facebook" size="sm"
-            onClick={handleOpenTableros}
-            >
-                Ocultar Tabla
-            </Button> :
-            <Button colorScheme="facebook" size="sm"
-            onClick={handleOpenTableros}
-            >
-                Mostrar Tabla
-            </Button>
-        }
-        </Flex>
-
-        {openTableros ? (
-        <Table variant="striped" colorScheme="facebook" mb="20">
-            
-            <Thead >
-                <Tr >
-                <Th textAlign="center">DashboardName</Th>
-                <Th textAlign="center">Description</Th>
-                <Th textAlign="center">Created at</Th>
-                <Th textAlign="center">Update at</Th>
-                </Tr>
-            </Thead>
-            <Tbody>
-                { newResultadoTableros.length === 0 ? null : (
-            newResultadoTableros.map(resultT => (
-                <ListadoTableros
-                    key={resultT._id}
-                    resultT={resultT}                    
-                />
-            ))
-        )}
-            </Tbody>            
-        </Table>
-        ): null}
-        
         </Box>
         </>
      );
