@@ -5,7 +5,7 @@ import Buscador from './buscador';
 const Header = () => {
     return ( 
         <>
-        <Text fontWeight="bold" fontSize="4xl">Simetrik</Text>
+        <Text fontWeight="bold" fontSize="6xl" m="auto" textAlign="center">Simetrik</Text>
         <Buscador/>
         </>
      );

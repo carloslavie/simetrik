@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { obtenerResultadosApi } from '../reducers/buscadorReducer';
 import Router from 'next/router';
+import { Container, Input, Button } from '@chakra-ui/react';
 
 
 const Buscador = () => {
@@ -24,20 +25,22 @@ const Buscador = () => {
     }
     
     return ( 
+        <Container maxW="container.md">
         <form
             
             onSubmit={buscarProducto}
         >
-            <input 
+            <Input 
                 type="text"
-                placeholder="Buscar Productos"
+                placeholder="Ingrese su busqueda..."
                 onChange={e => guardarBusqueda(e.target.value)}
             />
 
-            <button
+            <Button width="100%" colorScheme="facebook" mt="2"
                 type="submit"
-            >Buscar</button>
+            >Buscar</Button>
         </form>
+        </Container>
      );
 }
  
