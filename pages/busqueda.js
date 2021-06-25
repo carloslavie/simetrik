@@ -36,24 +36,24 @@ const Busqueda = () => {
             setOpenConc(true)
         }
     }
-    // //State para cerrar Tabla fuentes
-    // const [ open, setOpen ] = useState(true);
-    // const handleOpen = ()=>{
-    //     if(open === true){
-    //         setOpen(false)
-    //     }else if(open === false){
-    //         setOpen(true)
-    //     }
-    // }
-    // //State para cerrar Tabla tableros
-    // const [ open, setOpen ] = useState(true);
-    // const handleOpen = ()=>{
-    //     if(open === true){
-    //         setOpen(false)
-    //     }else if(open === false){
-    //         setOpen(true)
-    //     }
-    // }
+    //State para cerrar Tabla fuentes
+    const [ openFuentes, setOpenFuentes ] = useState(true);
+    const handleOpenFuentes = ()=>{
+        if(openFuentes === true){
+            setOpenFuentes(false)
+        }else if(openFuentes === false){
+            setOpenFuentes(true)
+        }
+    }
+    //State para cerrar Tabla tableros
+    const [ openTableros, setOpenTableros ] = useState(true);
+    const handleOpenTableros = ()=>{
+        if(openTableros === true){
+            setOpenTableros(false)
+        }else if(openTableros === false){
+            setOpenTableros(true)
+        }
+    }
 
     //States para usuarios
     const [value, setValue] = useState("");
@@ -265,11 +265,17 @@ const Busqueda = () => {
             </Stack>
             </RadioGroup>
 
+            {open? 
             <Button colorScheme="facebook" size="sm"
             onClick={handleOpen}
             >
                 Ocultar Tabla
-            </Button>
+            </Button> :
+            <Button colorScheme="facebook" size="sm"
+            onClick={handleOpen}
+            >
+                Mostrar Tabla
+            </Button>}
         </Flex>
 
         {open ? 
@@ -287,7 +293,6 @@ const Busqueda = () => {
                 <Th textAlign="center">Phone Number</Th>
                 <Th textAlign="center">Company</Th>
                 <Th textAlign="center">Created at</Th>
-                {/* <Th isNumeric>multiply by</Th> */}
                 </Tr>
             </Thead>
             <Tbody>
@@ -313,7 +318,7 @@ const Busqueda = () => {
         </Table>
         ): null}
 
-        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="2">CONCILIACIONES</Text>
+        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="4">CONCILIACIONES</Text>
 
         <Flex direction="row" alignItems="center" justify="space-between" m="4">
 
@@ -377,9 +382,26 @@ const Busqueda = () => {
         </Table>
         ) : null }
 
-        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="2">FUENTES</Text>
+        <Flex direction="row" alignItems="center" justify="space-between" m="4">
+            <Text fontSize="2xl" fontWeight="semibold" my="2" ml="4">FUENTES</Text>
 
-        <Table variant="striped" colorScheme="facebook">
+            {openFuentes ? 
+            <Button colorScheme="facebook" size="sm"
+            onClick={handleOpenFuentes}
+            >
+                Ocultar Tabla
+            </Button> :
+            <Button colorScheme="facebook" size="sm"
+            onClick={handleOpenFuentes}
+            >
+                Mostrar Tabla
+            </Button>
+            }
+
+        </Flex>
+
+        {openFuentes ? (
+            <Table variant="striped" colorScheme="facebook">
             
             <Thead >
                 <Tr >
@@ -401,30 +423,48 @@ const Busqueda = () => {
         )}
             </Tbody>            
         </Table>
+        ) : null}
 
-        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="2">TABLEROS</Text>
+        <Flex direction="row" alignItems="center" justify="space-between" m="4">
+        <Text fontSize="2xl" fontWeight="semibold" my="2" ml="4">TABLEROS</Text>
 
-<Table variant="striped" colorScheme="facebook">
-    
-    <Thead >
-        <Tr >
-        <Th textAlign="center">DashboardName</Th>
-        <Th textAlign="center">Description</Th>
-        <Th textAlign="center">Created at</Th>
-        <Th textAlign="center">Update at</Th>
-        </Tr>
-    </Thead>
-    <Tbody>
-        { newResultadoTableros.length === 0 ? null : (
-    newResultadoTableros.map(resultT => (
-        <ListadoTableros
-            key={resultT._id}
-            resultT={resultT}                    
-        />
-    ))
-)}
-    </Tbody>            
-</Table>
+        {openTableros ? 
+            <Button colorScheme="facebook" size="sm"
+            onClick={handleOpenTableros}
+            >
+                Ocultar Tabla
+            </Button> :
+            <Button colorScheme="facebook" size="sm"
+            onClick={handleOpenTableros}
+            >
+                Mostrar Tabla
+            </Button>
+        }
+        </Flex>
+
+        {openTableros ? (
+        <Table variant="striped" colorScheme="facebook">
+            
+            <Thead >
+                <Tr >
+                <Th textAlign="center">DashboardName</Th>
+                <Th textAlign="center">Description</Th>
+                <Th textAlign="center">Created at</Th>
+                <Th textAlign="center">Update at</Th>
+                </Tr>
+            </Thead>
+            <Tbody>
+                { newResultadoTableros.length === 0 ? null : (
+            newResultadoTableros.map(resultT => (
+                <ListadoTableros
+                    key={resultT._id}
+                    resultT={resultT}                    
+                />
+            ))
+        )}
+            </Tbody>            
+        </Table>
+        ): null}
         
 
 
