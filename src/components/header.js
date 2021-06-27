@@ -4,6 +4,8 @@ import Buscador from './buscador';
 import { Link, Box, Text } from '@chakra-ui/react'
 
 const Header = () => {
+
+        
     return ( 
         <>
         <Box position="fixed" bg="#385898" width="full" textAlign="center" textColor="white" fontSize="xl" fontWeight="semibold">
