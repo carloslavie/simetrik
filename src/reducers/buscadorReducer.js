@@ -37,25 +37,28 @@ export const { obtenerResultadosUsuarios, obtenerResultadosConciliaciones, obten
 export const obtenerResultadosApi =  () => async dispatch => {
         // dispatch(testimoniosFetching())
     try {
-        const respuestaUsuarios = await fetch('https://simetrik.herokuapp.com/api/usuarios');
+
+        const urlHeroku = 'https://simetrik.herokuapp.com'
+        //const urlLocal = 'http://localhost:3000'
+        const respuestaUsuarios = await fetch(`${urlHeroku}/api/usuarios`);
         const resultadoUsuarios = await respuestaUsuarios.json();
         console.log("USUARIOS", resultadoUsuarios)
             
         dispatch(obtenerResultadosUsuarios(resultadoUsuarios))
 
-        const respuestaConciliaciones = await fetch('https://simetrik.herokuapp.com/api/conciliaciones');
+        const respuestaConciliaciones = await fetch(`${urlHeroku}/api/conciliaciones`);
         const resultadoConciliaciones = await respuestaConciliaciones.json();
         console.log("CONCILIACIONES", resultadoConciliaciones)
             
         dispatch(obtenerResultadosConciliaciones(resultadoConciliaciones))
 
-        const respuestaFuentes = await fetch('https://simetrik.herokuapp.com/api/fuentes');
+        const respuestaFuentes = await fetch(`${urlHeroku}/api/fuentes`);
         const resultadoFuentes = await respuestaFuentes.json();
         console.log("FUENTES", resultadoFuentes)
             
         dispatch(obtenerResultadosFuentes(resultadoFuentes))
 
-        const respuestaTableros = await fetch('https://simetrik.herokuapp.com/api/tableros');
+        const respuestaTableros = await fetch(`${urlHeroku}/api/tableros`);
         const resultadoTableros = await respuestaTableros.json();
         console.log("TABLEROS",resultadoTableros)
             

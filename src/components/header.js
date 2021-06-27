@@ -6,7 +6,7 @@ import { Link, Box, Text } from '@chakra-ui/react'
 const Header = () => {
     return ( 
         <>
-        <Box position="fixed" bg="white" width="full" textAlign="center" fontSize="xl" fontWeight="semibold">
+        <Box position="fixed" bg="#385898" width="full" textAlign="center" textColor="white" fontSize="xl" fontWeight="semibold">
             <Link href="#inicio" mx="4">Inicio</Link>
             <Link href="#usuarios" mx="4">Usuarios</Link>
             <Link href="#conciliaciones" mx="4">Conciliaciones</Link>

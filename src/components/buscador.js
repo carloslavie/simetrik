@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { obtenerResultadosApi } from '../reducers/buscadorReducer';
-import Router from 'next/router';
-import { Container, Input, Button } from '@chakra-ui/react';
+import { Box, Container, Input, Button } from '@chakra-ui/react';
 import BusquedaNew from './busquedaNew';
 
 
@@ -10,19 +9,23 @@ const Buscador = () => {
 
     
     const [ q, guardarBusqueda ] = useState('');
+    const [ error, setError ] = useState(false)
     const dispatch = useDispatch()
 
     const buscarProducto = e =>{
         e.preventDefault();
 
-        // if(busqueda.trim() === '') return;
-        console.log("buscando")
-        dispatch(obtenerResultadosApi());
-        // Router.push({
-        //     pathname: '/busqueda',
-        //     query: { q : busqueda }
-        // })
+        if(q.trim() === '') {
+            setError(true);
+            setTimeout(() => {
+                setError(false);                
+            }, 2000);
+            return;
+        }
+        
 
+        dispatch(obtenerResultadosApi());
+        
     }
     
     return ( 
@@ -42,6 +45,17 @@ const Buscador = () => {
                 type="submit"
             >Buscar</Button>
         </form>
+        {error && 
+        <Box 
+            fontSize="1xl" 
+            textColor="white" 
+            textAlign="center" 
+            bg="red" 
+            borderRadius="5"
+            boxShadow="md"
+            mt="2"
+            >El campo busqueda no puede estar vacio</Box>
+}
         </Container>
         
         <BusquedaNew

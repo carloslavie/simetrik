@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import ListadoBusquedaUsuarios from './tablasBusqueda/listadoBusquedaUsuarios';
 import ListadoConciliaciones from './tablasBusqueda/listadoConciliaciones';
 import ListadoFuentes from './tablasBusqueda/listadoFuentes';
 import ListadoTableros from './tablasBusqueda/listadoTableros';
-import { Link, Box, Flex, Button, Stack, Radio, RadioGroup, Text, Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react"
+import { Box, Flex, Button, Stack, Radio, RadioGroup, Text, Table, Thead, Tbody, Tr, Th } from "@chakra-ui/react"
 
 
 const BusquedaNew = ({q}) => {
@@ -281,8 +280,7 @@ const BusquedaNew = ({q}) => {
 
             {open ? 
             (
-                <Table variant="striped" colorScheme="facebook" mb="20">
-                
+                <Table variant="striped" colorScheme="facebook" mb="20">                
                 <Thead >
                     <Tr >
                     <Th textAlign="center">First Name</Th>
@@ -305,19 +303,21 @@ const BusquedaNew = ({q}) => {
                             />
                         )) ) :
 
-                ( newResultadoUsuarios.length === 0 ? 'No existen resultados que mostrar' : (
+                ( newResultadoUsuarios.length === 0 & q.length > 0 ? <Box textAlign="center" width="100%" m="auto" fontSize="2xl" color="#385898" fontWeight="semibold">No existen coincidencias</Box> : q.length > 0 ?(
                 newResultadoUsuarios.map(result => (
                     <ListadoBusquedaUsuarios
                         key={result._id}
                         result={result}                    
                     />
                 ))
-            ))
+            ) : null)
             }
                     
                 </Tbody>            
             </Table>
             ): null}
+
+            <hr/>
 
             <Text id="conciliaciones" fontSize="2xl" fontWeight="semibold" my="2" ml="4">CONCILIACIONES</Text>
 
@@ -370,18 +370,20 @@ const BusquedaNew = ({q}) => {
                             />
                             )) ) :
 
-                    ( newResultadoConciliaciones.length === 0 ? null : (
+                    ( newResultadoConciliaciones.length === 0 & q.length > 0 ? <Box textAlign="center" width="100%" m="auto" fontSize="2xl" color="#385898" fontWeight="semibold">No existen coincidencias</Box> : q.length > 0 ? (
                         newResultadoConciliaciones.map(resultC => (
                             <ListadoConciliaciones
                                 key={resultC._id}
                                 resultC={resultC}                    
                             />
                     ))
-                ))
+                ) : null)
                 }
                 </Tbody>            
             </Table>
             ) : null }
+
+            <hr/>
 
             <Flex direction="row" alignItems="center" justify="space-between" m="4">
                 <Text id="fuentes" fontSize="2xl" fontWeight="semibold" my="2" ml="4">FUENTES</Text>
@@ -425,6 +427,8 @@ const BusquedaNew = ({q}) => {
                 </Tbody>            
             </Table>
             ) : null}
+
+            <hr/>
 
             <Flex direction="row" alignItems="center" justify="space-between" m="4">
             <Text id="tableros" fontSize="2xl" fontWeight="semibold" my="2" ml="4">TABLEROS</Text>
